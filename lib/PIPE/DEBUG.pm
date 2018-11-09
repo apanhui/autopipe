@@ -34,7 +34,7 @@ use warnings;
 
 require Exporter;
 our @ISA = qw(Exporter);
-our @EXPORT = qw(timeLOG LOG WARN ERROR check_path vital_warn);
+our @EXPORT = qw(timeLOG LOG WARN ERROR check_path vital_warn check_cmd ftime);
 
 use Cwd 'abs_path';
 
