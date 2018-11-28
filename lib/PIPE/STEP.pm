@@ -36,12 +36,6 @@ our @ISA       = qw(Exporter);
 
 use File::Basename qw/dirname basename/;
 
-use FindBin;
-use lib "$FindBin::RealBin";
-use lib "$FindBin::RealBin/lib";
-use lib "$FindBin::RealBin/../";
-use lib "$FindBin::RealBin/../lib";
-
 use PIPE::DEBUG;
 use PIPE::ANALYSIS;
 
@@ -98,7 +92,9 @@ sub cmd {
 	my ($class,$cmd,%opts) = @_;
 
 	$class->{cmd} .= $cmd;
-	$class->{cmd} .= "\n" unless $opts{'-nobr'};
+	$class->{cmd} .= "\n" unless $opts{'-nobr'} || $cmd eq "";
+
+    return $class->{cmd};
 }
 
 sub all_analysis {

@@ -41,12 +41,6 @@ our @ISA       = qw(Exporter);
 use File::Path qw/rmtree remove_tree mkpath make_path/;
 use Cwd 'abs_path';
 
-use FindBin qw/$Bin/;
-use lib "$FindBin::RealBin";
-use lib "$FindBin::RealBin/lib";
-use lib "$FindBin::RealBin/../";
-use lib "$FindBin::RealBin/../lib";
-
 use PIPE::DEBUG;
 use PIPE::CONF qw/load_conf/;
 use PIPE::STEP;
@@ -91,6 +85,11 @@ sub init_pipe {
         $class->{conf} = load_conf($opts{'-conf'});
     }
 
+# load software 
+    if ($ENV{'AP_PATH'} && -e "$ENV{'AP_PATH'}/etc/software.conf") {
+        $class->{soft} = load_conf("$ENV{'AP_PATH'}/etc/software.conf");
+    }
+
 ## init some public vars 
     $class->{step_id}     = 1;
     $class->{analysis_id} = 1;
@@ -102,9 +101,7 @@ sub init_pipe {
     $class->{steps}       = {};
 
 # for 'track' model, will save all detail run info (contain time) in MySQL
-    if ($class->{mode} eq "track") {
-
-    }
+    if ($class->{mode} eq "track") { }
 }
 
 #===  FUNCTION  ================================================================
@@ -150,11 +147,11 @@ sub all_analysis {
 sub run {
     my ($class,%opts) = @_;
 
-    if ($class->{mode} eq "shell") {
+    if ($class->{'mode'} eq "shell") {
         $class->make_path_tree();
         $class->create_shell(-run=>0);
         $class->pipeinfo();
-    } elsif ($class->{mode} eq "track") {
+    } elsif ($class->{'mode'} eq "track") {
         $class->make_path_tree();
         $class->create_shell(-run=>1);
         $class->pipeinfo();
@@ -175,12 +172,16 @@ sub make_path_tree {
 }
 
 
+#-------------------------------------------------------------------------------
 # create shell files of all steps 
+#-------------------------------------------------------------------------------
 sub create_shell {
     my ($class,%opts) = @_;
-
+    
+    timeLOG("** start to create pipe: [$class->{pipe_name}] **");
     open my $fh_total_sh , ">" , "$class->{shelldir}/all_steps.sh" or die $!;
     foreach my $step ( $class->all_steps() ) {
+        timeLOG("**** start to run step: [$step->{id}.$step->{name}] ****");
         $step->{ctime} = ftime();
         my $step_sh = "$class->{shelldir}/SH$step->{id}.$step->{name}.sh";
         open my $fh_step_sh , ">" , $step_sh or die $!;
@@ -191,6 +192,7 @@ sub create_shell {
                 next;
             }
 
+            timeLOG("****** start to run substep: [$analysis->{id}.$analysis->{name}] ******");
             $analysis->{ctime} = ftime();
             
             my $analysis_sh = "$step->{shelldir}/SH$analysis->{id}.$analysis->{name}.sh";
@@ -200,6 +202,7 @@ sub create_shell {
             
             print $fh_step_sh qsub_cmd($analysis,$analysis_sh,$opts{'-run'});
             $analysis->{ftime} = ftime();
+            timeLOG("****** substep [$analysis->{id}.$analysis->{name}] was done ******");
         }
 
         print $fh_step_sh $step->{cmd} if $step->{cmd};
@@ -207,23 +210,28 @@ sub create_shell {
 
         print $fh_total_sh qsub_cmd($step,$step_sh,$opts{'-run'});
         $step->{ftime} = ftime();
+        timeLOG("**** step [$step->{id}.$step->{name}] was done ****");
     }
     close $fh_total_sh;
     $class->{ftime} = ftime();
+    timeLOG("** pipe [$class->{pipe_name}] was done :) **");
 }
 
 
 sub qsub_cmd {
     my ( $object  , $shell , $run )= @_;
     return "" unless $object->{cmd};
+    
+    my $qsub = $object->{parent}->soft('qsub');
+    my $sge  = $object->{parent}->soft('qsubsge');
 
     my $cmd = "# step $object->{id}: $object->{name}\n";
     $cmd .= qq|echo [`date +"%F %T"`] start to run step $object->{id}, $object->{name} ...\n|;
     if ($object->{cpu} == 1) {
         my $time = time();
-        $cmd .= "qsub -cwd -S /bin/sh -sync y -q $object->{queue} -l vf=$object->{mem} -o $shell.o$time -e $shell.e$time $shell\n";
+        $cmd .= "$qsub -cwd -S /bin/sh -sync y -q $object->{queue} -l vf=$object->{mem} -o $shell.o$time -e $shell.e$time $shell\n";
     } else {
-        $cmd .= "qsub-sge.pl --queue=$object->{queue} --convert no --resource vf=$object->{mem} --maxjob $object->{cpu} $shell\n";
+        $cmd .= "$sge --queue=$object->{queue} --convert no --resource vf=$object->{mem} --maxjob $object->{cpu} $shell\n";
     }
     $cmd .= qq|echo [`date +"%F %T"`] finished step $object->{id}, $object->{name}.\n\n|;
 
@@ -236,47 +244,21 @@ sub qsub_cmd {
 }
 
 
+#-------------------------------------------------------------------------------
 # create a file with markdown format to save the detail pipe run information step by step
+#-------------------------------------------------------------------------------
 sub pipeinfo {
     my ($class,%opts) = @_;
-
-    my $markdown = <<MD;
-[TOC]
-
-## Pipeline: $class->{pipe_name}
-
-Created User: **$ENV{USER}**
-Created Time: **`$class->{ctime}`**
-Finished Time: **`$class->{ftime}`**
-
-Work dir: **`$class->{path}`**
-Total shell file: **`$class->{shelldir}/all_steps.sh`**
-MD
+    
+    my $prjid = $class->{conf}->{project_id} || "NA";
+    my $markdown = md_context($class,2);
 
     foreach my $step ( $class->all_steps() ) {
-        $markdown .= <<MD;
-\n### $step->{id}.$step->{name}\n
-+ Created time: **`$step->{ctime}`**
-+ Finished time: **`$step->{ftime}`**
-+ Work dir: **`$step->{path}`**
-+ Shell file: **`$class->{shelldir}/SH$step->{id}.$step->{name}.sh`**
-+ CPUs: **$step->{cpu}**
-+ Queue: **$step->{queue}**
-+ Memory: **$step->{mem}**
-MD
+        $markdown .= md_context($step,3);
         $markdown .= md_cmd($step);
         foreach my $analysis ( $step->all_analysis() ) {
-            $markdown .= <<MD;
-\n#### $analysis->{id}.$analysis->{name}
-+ Created time: **`$analysis->{ctime}`**
-+ Finished time: **`$analysis->{ftime}`**
-+ Work dir: **`$analysis->{path}`**
-+ Shell file: **`$class->{shelldir}/$step->{id}.$step->{name}/SH$analysis->{id}.$analysis->{name}.sh`**
-+ Cpus: **$analysis->{cpu}**
-+ Queue: **$analysis->{queue}**
-+ Memory: **$analysis->{mem}**
-MD
-            $markdown .= md_cmd($step);
+            $markdown .= md_context($analysis,4);
+            $markdown .= md_cmd($analysis);
         }
     }
 
@@ -284,4 +266,47 @@ MD
     open my $fh_md , ">$class->{path}/${fname}.pipe.md" or die "can't open file $fname";
     print $fh_md $markdown;
     close $fh_md;
+
+    return "$class->{path}/${fname}.pipe.md";
+}
+
+
+#-------------------------------------------------------------------------------
+#  fetch the sample names which defined in the config 
+#-------------------------------------------------------------------------------
+sub samples {
+    my ($class,%opts) = @_;
+    $opts{'-attr'} ||= "samples";
+    $opts{'-sep'} ||= "[;,\\s\\t]";
+
+    if (exists $class->{conf}->{$opts{'-attr'}}){
+        my @samples = split /$opts{'-sep'}/ , $class->{conf}->{$opts{'-attr'}};
+        return @samples;
+    } else {
+        ERROR("The samples is not defined in config! [$opts{'-attr'}]");
+    }
+}
+
+#-------------------------------------------------------------------------------
+# fetch the software of database path 
+#-------------------------------------------------------------------------------
+sub soft {
+    my $class = shift;
+    my $name = shift;
+
+    if ($class->{conf}->{$name}){
+        return $class->{conf}->{$name};
+    } elsif ($class->{conf}->{soft}->{$name}) {
+        return $class->{conf}->{soft}->{$name};
+    } elsif ($class->{conf}->{software}->{$name}) {
+        return $class->{conf}->{software}->{$name};
+    } elsif ($class->{soft}->{$name}) {
+        return $class->{soft}->{$name};
+    } elsif (`which $name`) {
+        my $p = `which $name`;
+        chomp $p;
+        return $p;
+    } else {
+        ERROR('no_software_exists',$name);
+    }
 }

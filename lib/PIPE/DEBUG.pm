@@ -37,12 +37,8 @@ our @ISA = qw(Exporter);
 our @EXPORT = qw(timeLOG LOG WARN ERROR check_path vital_warn check_cmd ftime);
 
 use Cwd 'abs_path';
-
-use FindBin;
 use Carp qw(carp confess croak);
-
-use lib "$FindBin::RealBin";
-use lib "$FindBin::RealBin/../";
+use FindBin;
 
 sub timeLOG
 {

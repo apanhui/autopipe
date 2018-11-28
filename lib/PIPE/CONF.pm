@@ -37,12 +37,7 @@ our @EXPORT = qw(load_conf fetch_rawdata fetch_insert_size fetch_path);
 
 use Config::General;
 use File::Basename qw(dirname basename);
-
 use FindBin;
-use lib "$FindBin::RealBin";
-use lib "$FindBin::RealBin/lib";
-use lib "$FindBin::RealBin/../";
-use lib "$FindBin::RealBin/../lib";
 
 use PIPE::DEBUG;
 
