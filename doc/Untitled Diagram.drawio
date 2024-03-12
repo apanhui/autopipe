@@ -1,29 +1,66 @@
-<mxfile host="app.diagrams.net" modified="2024-03-12T10:31:30.405Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="on8m8wdrhj1mm6eMTfej" version="16.5.6" type="github">
+<mxfile host="app.diagrams.net" modified="2024-03-12T10:38:16.977Z" agent="5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="fHRNfiLhoqWNkoFXvXdT" version="16.5.6" type="github">
   <diagram id="bDfR79dHBE0h-xmKrc2x" name="Page-1">
     <mxGraphModel dx="946" dy="543" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="4BAXkeHGv6857r1aA5fY-12" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="4BAXkeHGv6857r1aA5fY-1" target="4BAXkeHGv6857r1aA5fY-2">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="290" y="100" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
         <mxCell id="4BAXkeHGv6857r1aA5fY-1" value="Reads" style="shape=parallelogram;perimeter=parallelogramPerimeter;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
           <mxGeometry x="370" y="70" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4BAXkeHGv6857r1aA5fY-2" value="FASTQC" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="190" y="170" width="120" height="60" as="geometry" />
+          <mxGeometry x="220" y="170" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BAXkeHGv6857r1aA5fY-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4BAXkeHGv6857r1aA5fY-3" target="4BAXkeHGv6857r1aA5fY-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="4BAXkeHGv6857r1aA5fY-18" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" target="4BAXkeHGv6857r1aA5fY-8">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="430" y="240" as="sourcePoint" />
+            <Array as="points">
+              <mxPoint x="600" y="240" />
+            </Array>
+          </mxGeometry>
         </mxCell>
         <mxCell id="4BAXkeHGv6857r1aA5fY-3" value="fastp质控" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="370" y="170" width="120" height="60" as="geometry" />
         </mxCell>
+        <mxCell id="4BAXkeHGv6857r1aA5fY-14" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4BAXkeHGv6857r1aA5fY-4" target="4BAXkeHGv6857r1aA5fY-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
         <mxCell id="4BAXkeHGv6857r1aA5fY-4" value="去rRNA（评估rRNA比例）" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="370" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BAXkeHGv6857r1aA5fY-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="4BAXkeHGv6857r1aA5fY-5" target="4BAXkeHGv6857r1aA5fY-6">
+          <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="4BAXkeHGv6857r1aA5fY-5" value="比对参考（评估参考比对率）" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
           <mxGeometry x="370" y="360" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4BAXkeHGv6857r1aA5fY-6" value="比NT库" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="270" y="460" width="120" height="60" as="geometry" />
+          <mxGeometry x="250" y="470" width="120" height="60" as="geometry" />
         </mxCell>
         <mxCell id="4BAXkeHGv6857r1aA5fY-7" value="比NR库" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="480" y="460" width="120" height="60" as="geometry" />
+          <mxGeometry x="480" y="470" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BAXkeHGv6857r1aA5fY-8" value="频谱分析" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="540" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="4BAXkeHGv6857r1aA5fY-9" value="" style="endArrow=classic;html=1;rounded=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="4BAXkeHGv6857r1aA5fY-1" target="4BAXkeHGv6857r1aA5fY-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="450" y="150" as="sourcePoint" />
+            <mxPoint x="440" y="290" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="4BAXkeHGv6857r1aA5fY-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;" edge="1" parent="1" source="4BAXkeHGv6857r1aA5fY-5" target="4BAXkeHGv6857r1aA5fY-7">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="440" y="430" as="sourcePoint" />
+            <mxPoint x="320" y="480" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
       </root>
     </mxGraphModel>
