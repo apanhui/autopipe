@@ -1,9 +1,43 @@
-<mxfile host="app.diagrams.net" modified="2024-04-28T04:59:56.546Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" version="24.2.5" etag="uKprF92RnxNXmSUUdkPq" type="github">
+<mxfile host="app.diagrams.net" modified="2024-04-28T05:04:34.137Z" agent="Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36" etag="73KdXlJ4PSwEas1JfQXd" version="24.2.5" type="github">
   <diagram name="第 1 页" id="Ayr7_At3stTFHZxhKbWQ">
-    <mxGraphModel>
+    <mxGraphModel dx="1434" dy="725" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
+        <mxCell id="SgdYvgzxh77QOYFdnuYz-4" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="SgdYvgzxh77QOYFdnuYz-2" target="SgdYvgzxh77QOYFdnuYz-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SgdYvgzxh77QOYFdnuYz-2" value="提交补充分析" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="190" y="80" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="SgdYvgzxh77QOYFdnuYz-6" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="SgdYvgzxh77QOYFdnuYz-3" target="SgdYvgzxh77QOYFdnuYz-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SgdYvgzxh77QOYFdnuYz-10" value="是" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="SgdYvgzxh77QOYFdnuYz-6">
+          <mxGeometry x="-0.2727" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SgdYvgzxh77QOYFdnuYz-3" value="分析内容=“&lt;span style=&quot;color: rgb(20, 20, 20); font-family: &amp;quot;Helvetica Neue&amp;quot;, Helvetica, Tahoma, Arial, sans-serif; text-align: start; background-color: rgb(255, 255, 255);&quot;&gt;项目问题数据评估-问题原因探究&lt;/span&gt;”" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="190" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="SgdYvgzxh77QOYFdnuYz-5" value="通过" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="444" y="205" width="120" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="SgdYvgzxh77QOYFdnuYz-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="SgdYvgzxh77QOYFdnuYz-8" target="SgdYvgzxh77QOYFdnuYz-9">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="SgdYvgzxh77QOYFdnuYz-12" value="是" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="SgdYvgzxh77QOYFdnuYz-11">
+          <mxGeometry x="0.0455" y="1" relative="1" as="geometry">
+            <mxPoint y="1" as="offset" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="SgdYvgzxh77QOYFdnuYz-8" value="补充分析次数 &amp;gt; 已经提交补充分析次数" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="280" width="300" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="SgdYvgzxh77QOYFdnuYz-9" value="通过" style="rounded=1;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="444" y="295" width="120" height="30" as="geometry" />
+        </mxCell>
       </root>
     </mxGraphModel>
   </diagram>
